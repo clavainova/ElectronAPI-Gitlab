@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Team</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link href="../styles/global.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Zen+Dots&display=swap" rel="stylesheet">
+    <script src="../../main/validation.js"></script>
+</head>
+
+<body id="body" onload="printPlayerList()">
+
+    <div class="teamDivider">
+        <h1>New Team</h1>
+        <h2>Enter an ID: <input type="text" id="inputTeamID"></input></h2>
+        <h2>Select members:</h2>
+        <select multiple="multiple" id="mySelect">
+        </select><br>
+        <button onclick="goValidate();">OK</button>
+    </div>
+
+    <div class="validateBox" id="validateBox">
+        <h2>Valdate your choices</h2>
+        <b>ID:</b>
+        <p id='teamID'></p>
+        <b>Members:</b>
+        <ul id='teamMembers'></ul>
+        <span><button onclick="clearData();">REENTER</button> <button onclick="createTeam()">SUBMIT</button></span>
+    </div>
+
+</body>
+
+</html>

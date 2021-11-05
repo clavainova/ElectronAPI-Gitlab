@@ -1,0 +1,248 @@
+/* colour palette:
+
+main
+- white, black 
+- alt black/dark grey: rgb(34, 34, 34) 
+- main yellow: rgb(255, 217, 0)
+- highlight yellow: rgb(255, 204, 65)
+
+misc
+- blue box shadow: rgba(0, 0, 255, 0.2)
+- black box shadow: rgba(0, 0, 0, 0.2)
+- grey box bg: rgba(184, 184, 184, 0.95)
+- yellow/white popup bg: rgb(255, 219, 153, 0.95)
+- error: red
+
+****note: if changed, these should also be changed in the javascript
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Zen Dots', cursive;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    font-weight: normal;
+    color: white;
+}
+
+input {
+    border: none;
+}
+
+body {
+    background-color: rgb(34, 34, 34);
+    background-image: repeating-linear-gradient( 45deg, transparent, transparent 100px, rgb(0, 0, 0) 100px, rgb(34, 34, 34) 200px), repeating-linear-gradient( to left, rgb(255, 204, 65), rgb(255, 217, 0));
+    background-size: 200% 200%;
+    animation: barberpole 10s linear infinite;
+    background-repeat: no-repeat;
+}
+
+/* @keyframes barberpole {
+    100% {
+        background-position: 100% 100%;
+    }
+} */
+
+div {
+    padding: 2.5vw;
+}
+
+#teamID, option, input, p, li {
+    padding-left: 15px;
+    border-left: 15px solid white;
+}
+
+.teamDivider {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border: 3px solid rgb(255, 217, 0);
+    background: rgba(184, 184, 184, 0.95);
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+    border-radius: 25px;
+    width: 30vw;
+    min-width: 500px;
+    height: 30vw;
+    min-height: 500px;
+    margin: auto;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    float: center;
+    text-align: center;
+}
+
+select {
+    min-height: 135px;
+    width: 25vw;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0);
+    border: none;
+}
+
+span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2vh;
+}
+
+option, p, li, input {
+    font-family: 'Roboto Mono', monospace;
+    background-color: rgb(34, 34, 34);
+    color: white;
+    /* border-radius: 25px; */
+    padding: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.validateBox {
+    display: none;
+    position: fixed;
+    top: 10vh;
+    width: 50vw;
+    min-width: 500px;
+    left: 22.5vw;
+    border: 3px solid rgb(255, 217, 0);
+    background-color: rgb(255, 219, 153, 0.95);
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+    border-radius: 25px;
+}
+
+h1, h2, select {
+    margin-bottom: 5vh;
+}
+
+button, input {
+    box-shadow: 6px 6px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.errorMessage, .successMessage {
+    position: fixed;
+    width: 100%;
+}
+
+.errorMessage {
+    background-color: rgb(255, 219, 153, 0.97);
+    color: red;
+    border-left: 15px solid red;
+    bottom: 0;
+}
+
+.successMessage {
+    background-color: rgba(211, 255, 153, 0.97);
+    color: green;
+    border-left: 15px solid green;
+    top: 0;
+}
+
+.errorMessage:after {
+    content: ". Click on this message to hide it.";
+}
+
+.waitMessage {
+    background-color: rgb(255, 245, 191);
+    color: black;
+    border: 15px solid rgb(255, 174, 0);
+    top: 25%;
+    left: 20%;
+    width: 50%;
+    position: absolute;
+}
+
+.waitMessage:after {
+    content: "...";
+    animation-name: waitMessageFrames;
+    animation-duration: 4s;
+    animation-iteration-count:infinite;
+}
+
+@keyframes waitMessageFrames {
+    0% {
+        content: "...."
+    }
+    10% {
+        content: "....."
+    }
+    20% {
+        content: "......"
+    }
+    30% {
+        content: "......."
+    }
+    40% {
+        content: "........"
+    }
+    50% {
+        content: "........."
+    }
+    60% {
+        content: ".........."
+    }
+    70% {
+        content: "..........."
+    }
+    80% {
+        content: "............"
+    }
+    90% {
+        content: "............."
+    }
+    100% {
+        content: ".............."
+    }
+}
+
+nav ul {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav ul li {
+    margin-left: 1vw;
+    margin-right: 1vw;
+    background: rgba(0, 0, 0, 0.95);
+    border: 3px solid rgb(255, 217, 0);
+    box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+    padding: 10px;
+    color: white;
+    border-radius: 25px;
+}
+
+nav ul li:hover, nav ul li a:hover {
+    transition: all 0.5s ease;
+    box-shadow: 0 0 20px 10px rgb(255, 217, 0);
+    background-color: rgb(255, 217, 0);
+    color: black;
+}
+
+input:focus, textarea:focus {
+    border-left: 15px solid rgb(255, 217, 0);
+}
+
+button {
+    margin: auto;
+    padding: 20px;
+    min-width: 200px;
+    border-radius: 25px;
+    background-color: rgb(34, 34, 34);
+    color: white;
+    border: none;
+    background-color: rgb(0, 0, 0);
+}
+
+button:hover {
+    background-color: rgb(255, 255, 255);
+    color: black;
+    transition: background 0.5s ease-in-out;
+}

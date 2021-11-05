@@ -1,0 +1,44 @@
+
+////////////////////////////////////////////////////////////////
+/*
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://admin:simplonsimp@cluster0.llbg1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const dbName = "Projet-Fil-Rouge"; //which db
+
+//alternative to this: get entire json, then pushentire json to db when finished, also delete old one (risky?dataloss? no limiting inputs? contraints?)
+connect("SELECT", "{startDate:'21/01/2021'}");
+
+
+//purpose is CREATE, SELECT, DELETE or UPDATE
+//data is optional
+async function connect(purpose, data = null) {
+  let result;
+  try {
+    await client.connect(); //connect
+    const db = client.db(dbName);
+    const col = db.collection("Teams"); //this is the collection
+    console.log(col);
+    switch (purpose) {
+      case "CREATE":
+        result = await col.insertOne(data);
+        break;
+      case "SELECT":
+        result  = await col.findOne({startDate:'21/01/2021'});
+        break;
+      case "DELETE":
+        result = await col.deleteOne(data);
+        break;
+      case "UPDATE":
+        result = await col.updateOne(data);
+        break;
+      default:
+        console.log("invalid 'purpose' parametre passed into connect()");
+        break;
+    }
+
+  } catch (e) { console.log(e); }
+  await client.close(); //close connection
+}
+*/

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Game</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link href="../styles/global.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Zen+Dots&display=swap" rel="stylesheet">
+    <script src="../../main/validation.js"></script>
+</head>
+
+<body id="body" onload="printTeamList()">
+    <div class="teamDivider">
+        <h1>New Game</h1>
+        <h2>Enter a duration: <input type="text" id="inputDuration"></input></h2>
+        <h2>Select 2 teams:</h2>
+        <select multiple="multiple" id="mySelect">
+
+        </select><br>
+        <button onclick="validateGame();">OK</button>
+    </div>
+</body>
+
+</html>

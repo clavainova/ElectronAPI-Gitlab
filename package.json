@@ -2,7 +2,7 @@
   "name": "escape-game-electron",
   "version": "1.0.0",
   "description": "fil rouge projet",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "start": "electron .",
     "test": "mocha"

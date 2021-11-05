@@ -207,3 +207,217 @@ const port = 3000
 const host = '127.0.0.1'
 server.listen(port, host)
 console.log(`Listening at http://${host}:${port}`)
+
+//-------------------------------NAVIGATION-------------------------------
+
+
+function createWindow() { //create window
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      enableRemoteModule: false, // turn off remote
+      contextIsolation: true,
+      nodeIntegration: false,
+    }
+  })
+
+  if (!storage.getJwt()) { //if no jwt, load login page
+    win.loadFile('src/renderer/pages/index.html');
+  } else {
+    win.loadFile('src/renderer/pages/team.html');
+  }
+  return win;
+}
+let win;
+app.whenReady().then(() => {
+  win = createWindow()
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      win = createWindow()
+    }
+  });
+  win.webContents.openDevTools();
+  setTimeout(() => {
+    win.webContents.send('init', config);
+  }, 1000)
+});
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+}) //quit app if closed
+
+//-------------------------------GENERATE MENU-------------------------------
+
+
+//this needs to be for exclusively after login
+//also clicking the menu items should do something lol
+
+const template = [
+  {
+    label: 'Create new...', submenu: [{
+      label: "Team", click: async () => {
+        if (isLoggedIn) {
+          let f = `file://${__dirname}/src/renderer/pages/team.html`;
+          win.loadURL(f);
+        } else {
+          win.loadFile('src/renderer/pages/index.html');
+        }
+      }
+    },
+    {
+      label: "Game", click: async () => {
+        if (isLoggedIn) { //each page checks if you are logged in, otherwise redirects you to login page
+          let f = `file://${__dirname}/src/renderer/pages/game.html`;
+          win.loadURL(f);
+        } else {
+          win.loadFile('src/renderer/pages/index.html');
+        }
+      }
+    },
+    {
+      label: "Player", click: async () => {
+        if (isLoggedIn) {
+          let f = `file://${__dirname}/src/renderer/pages/player.html`;
+          win.loadURL(f);
+        } else {
+          win.loadFile('src/renderer/pages/index.html');
+        }
+      }
+    }]
+  },
+  {
+    label: 'Edit or monitor existing...', submenu: [{
+      label: "Team", click: async () => {
+        if (isLoggedIn) {
+          let f = `file://${__dirname}/src/renderer/pages/monitorteam.html`;
+          win.loadURL(f);
+        } else {
+          win.loadFile('src/renderer/pages/index.html');
+        }
+      }
+    },
+    {
+      label: 'Game', click: async () => {
+        if (isLoggedIn) {
+          let f = `file://${__dirname}/src/renderer/pages/monitorgame.html`;
+          win.loadURL(f);
+        } else {
+          win.loadFile('src/renderer/pages/index.html');
+        }
+      }
+    }/*,
+    {
+      label: 'Player', click: async () => {
+        if (isLoggedIn) {
+          let f = `file://${__dirname}/src/renderer/pages/monitorplayer.html`;
+          win.loadURL(f);
+        } else {
+          win.loadFile('src/renderer/pages/index.html');
+        }
+      }
+    }*/]
+  },
+  {
+    label: 'Account',
+    submenu: [{
+      label: 'Log out',
+      click: async () => {
+        isLoggedIn = false;
+        win.loadFile('src/renderer/pages/index.html');
+      }
+
+    }]
+  }
+];
+
+app.on('ready', () => {
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+});
+
+
+//-------------------------------LOGIN-------------------------------
+
+
+
+//------------------------------- LOCAL JSON HANDLING-------------------------------
+
+var json; //the current json
+//probably want to connect this to jwt
+
+//!!untested
+function add(type, values) {
+  switch (type) {
+    case "team":
+      break;
+    case "game":
+      break;
+    case "player":
+      break;
+  }
+  try {
+    writeJSONToServer();
+  } catch (e) {
+    console.log("server error: " + e);
+  }
+}
+
+
+//------------------------------- SERVER JSON HANDLING-------------------------------
+
+
+
+//gets the JSON, returns 1 JSON string
+async function getJSON() {
+  // connect to your cluster
+  const client = await MongoClient.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  // specify the DB's name
+  const db = client.db('Projet-Fil-Rouge');
+  // execute find query
+  json = await db.collection('Teams').find({}).toArray();
+  // close connection
+  client.close();
+  //return json
+  //for testing -- console.log(JSON.stringify(items));
+  return JSON.stringify(items);
+}
+
+//!!untested
+async function deleteOldJSON() {
+  // connect to your cluster
+  const client = await MongoClient.connect('mongodb+srv://admin:simplonsimp@cluster0.llbg1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  // specify the DB's name
+  const db = client.db('Projet-Fil-Rouge');
+  // execute find query
+  await db.collection('Teams').deleteMany({}); //yeah no way this works but worth a shot
+  // close connection
+  client.close();
+}
+
+//!!untested
+async function writeJSONToServer() {
+  // connect to your cluster
+  const client = await MongoClient.connect('mongodb+srv://admin:simplonsimp@cluster0.llbg1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  // specify the DB's name
+  const db = client.db('Projet-Fil-Rouge');
+  // execute find query
+  await db.collection('Teams').insertOne({ json }); //this won't work
+  // close connection
+  client.close();
+}
+
+//------awaiting request------
+
